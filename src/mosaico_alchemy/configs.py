@@ -1,0 +1,2 @@
+MOSAICO_HOST = "localhost"
+MOSAICO_PORT = 6726

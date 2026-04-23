@@ -1,6 +1,6 @@
 from mosaicolabs import Message, Point3d, Pose, Quaternion
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class ReassemblePoseAdapter(BaseAdapter):

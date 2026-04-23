@@ -18,23 +18,23 @@ from mosaicolabs.platform.helpers import _decode_app_metadata
 from rich.console import Console
 from rich.panel import Panel
 
-from mosaicopacks.manipulation.contracts import (
+from mosaico_alchemy.manipulation.contracts import (
     DatasetPlugin,
     RosbagSequenceDescriptor,
     SequenceDescriptor,
     WriteMode,
 )
-from mosaicopacks.manipulation.datasets import (
+from mosaico_alchemy.manipulation.datasets import (
     DatasetRegistry,
     build_default_dataset_registry,
 )
-from mosaicopacks.manipulation.runner.executors.file_executor import (
+from mosaico_alchemy.manipulation.runner.executors.file_executor import (
     FileSequenceExecutor,
 )
-from mosaicopacks.manipulation.runner.executors.rosbag_executor import (
+from mosaico_alchemy.manipulation.runner.executors.rosbag_executor import (
     RosbagSequenceExecutor,
 )
-from mosaicopacks.manipulation.runner.reporters.reports import (
+from mosaico_alchemy.manipulation.runner.reporters.reports import (
     DatasetIngestionReport,
     SequenceIngestionResult,
 )

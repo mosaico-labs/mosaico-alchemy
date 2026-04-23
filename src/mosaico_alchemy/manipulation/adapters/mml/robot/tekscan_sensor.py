@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 from mosaicolabs.ros_bridge import ROSAdapterBase
 
-from mosaicopacks.manipulation.ontology import TekscanSensor
+from mosaico_alchemy.manipulation.ontology import TekscanSensor
 
 
 class TekscanSensorAdapter(ROSAdapterBase[TekscanSensor]):

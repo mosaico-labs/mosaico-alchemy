@@ -13,13 +13,13 @@ from threading import Event
 
 from mosaicolabs import TopicLevelErrorPolicy
 
-from mosaicopacks.manipulation.adapters import build_default_adapter_registry
-from mosaicopacks.manipulation.contracts import (
+from mosaico_alchemy.manipulation.adapters import build_default_adapter_registry
+from mosaico_alchemy.manipulation.contracts import (
     SequenceDescriptor,
     TopicDescriptor,
     WriteMode,
 )
-from mosaicopacks.manipulation.runner.reporters.sequence_progress import (
+from mosaico_alchemy.manipulation.runner.reporters.sequence_progress import (
     SequenceProgress,
 )
 

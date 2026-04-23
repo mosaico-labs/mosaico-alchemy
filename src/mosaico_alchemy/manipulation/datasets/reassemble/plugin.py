@@ -10,8 +10,8 @@ from pathlib import Path
 
 from mosaicolabs import CompressedImage, ForceTorque, Pose, RobotJoint, Velocity
 
-from mosaicopacks.manipulation.contracts import SequenceDescriptor, TopicDescriptor
-from mosaicopacks.manipulation.datasets.reassemble.iterators import (
+from mosaico_alchemy.manipulation.contracts import SequenceDescriptor, TopicDescriptor
+from mosaico_alchemy.manipulation.datasets.reassemble.iterators import (
     count_audio,
     count_event_frames,
     count_records,
@@ -21,9 +21,9 @@ from mosaicopacks.manipulation.datasets.reassemble.iterators import (
     iter_records,
     iter_video_frames,
 )
-from mosaicopacks.manipulation.ontology.audio import AudioDataStamped
-from mosaicopacks.manipulation.ontology.end_effector import EndEffector
-from mosaicopacks.manipulation.ontology.event_camera import EventCamera
+from mosaico_alchemy.manipulation.ontology.audio import AudioDataStamped
+from mosaico_alchemy.manipulation.ontology.end_effector import EndEffector
+from mosaico_alchemy.manipulation.ontology.event_camera import EventCamera
 
 
 class ReassemblePlugin:
@@ -53,7 +53,7 @@ class ReassemblePlugin:
     def _find_missing_paths(
         self, sequence_path: Path, required_paths: tuple[str, ...]
     ) -> tuple[str, ...]:
-        from mosaicopacks.manipulation.readers import HDF5Reader
+        from mosaico_alchemy.manipulation.readers import HDF5Reader
 
         with HDF5Reader(sequence_path) as reader:
             return reader.missing_paths(required_paths)

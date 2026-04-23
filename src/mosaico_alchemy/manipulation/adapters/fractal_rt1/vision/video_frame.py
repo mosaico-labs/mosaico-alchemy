@@ -1,7 +1,7 @@
 from mosaicolabs import CompressedImage, ImageFormat, Message
 from PIL import Image as PILImage
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class FractalRT1VideoFrameAdapter(BaseAdapter):

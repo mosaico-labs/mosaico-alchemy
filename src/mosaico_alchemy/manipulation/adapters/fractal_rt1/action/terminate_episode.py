@@ -1,7 +1,7 @@
 from mosaicolabs import Message
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.ontology.terminate_episode import (
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.ontology.terminate_episode import (
     TerminateEpisode,
 )
 

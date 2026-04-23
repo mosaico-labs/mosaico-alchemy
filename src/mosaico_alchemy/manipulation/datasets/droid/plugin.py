@@ -19,13 +19,13 @@ from mosaicolabs import (
     Velocity,
 )
 
-from mosaicopacks.manipulation.contracts import SequenceDescriptor, TopicDescriptor
-from mosaicopacks.manipulation.datasets.droid.iterators import (
+from mosaico_alchemy.manipulation.contracts import SequenceDescriptor, TopicDescriptor
+from mosaico_alchemy.manipulation.datasets.droid.iterators import (
     count_parquet_records,
     iter_mp4_frames,
     iter_parquet_records,
 )
-from mosaicopacks.manipulation.ontology.end_effector import EndEffector
+from mosaico_alchemy.manipulation.ontology.end_effector import EndEffector
 
 
 class DROIDPlugin:

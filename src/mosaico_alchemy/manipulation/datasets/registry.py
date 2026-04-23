@@ -8,11 +8,11 @@ this module instead of hard-coding knowledge of every dataset family.
 
 from pathlib import Path
 
-from mosaicopacks.manipulation.contracts import DatasetPlugin
-from mosaicopacks.manipulation.datasets.droid import DROIDPlugin
-from mosaicopacks.manipulation.datasets.fractal_rt1 import FractalRT1Plugin
-from mosaicopacks.manipulation.datasets.mml import MMLPlugin
-from mosaicopacks.manipulation.datasets.reassemble import ReassemblePlugin
+from mosaico_alchemy.manipulation.contracts import DatasetPlugin
+from mosaico_alchemy.manipulation.datasets.droid import DROIDPlugin
+from mosaico_alchemy.manipulation.datasets.fractal_rt1 import FractalRT1Plugin
+from mosaico_alchemy.manipulation.datasets.mml import MMLPlugin
+from mosaico_alchemy.manipulation.datasets.reassemble import ReassemblePlugin
 
 
 class DatasetRegistry:

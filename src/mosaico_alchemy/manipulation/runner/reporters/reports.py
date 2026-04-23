@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 
-from mosaicopacks.manipulation.contracts import IngestionDescriptor
+from mosaico_alchemy.manipulation.contracts import IngestionDescriptor
 
 SequenceResultStatus = Literal["ingested", "skipped", "failed", "interrupted"]
 DatasetReportStatus = Literal[

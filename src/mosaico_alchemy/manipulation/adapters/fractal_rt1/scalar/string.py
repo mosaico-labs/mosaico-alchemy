@@ -1,6 +1,6 @@
 from mosaicolabs import Message, String
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class FractalRT1StringAdapter(BaseAdapter):

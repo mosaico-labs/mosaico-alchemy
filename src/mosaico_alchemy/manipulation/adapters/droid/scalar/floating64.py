@@ -1,6 +1,6 @@
 from mosaicolabs import Floating64, Message
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class DroidFloating64Adapter(BaseAdapter):

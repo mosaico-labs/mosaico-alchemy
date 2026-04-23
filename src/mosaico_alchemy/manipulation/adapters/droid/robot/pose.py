@@ -1,7 +1,7 @@
 from mosaicolabs import Message, Point3d, Pose, Quaternion
 from scipy.spatial.transform import Rotation as R
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class DroidPoseAdapter(BaseAdapter):

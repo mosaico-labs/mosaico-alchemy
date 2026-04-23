@@ -1,7 +1,7 @@
 from mosaicolabs import Message
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.ontology.event_camera import Event, EventCamera
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.ontology.event_camera import Event, EventCamera
 
 
 class ReassembleEventsAdapter(BaseAdapter):

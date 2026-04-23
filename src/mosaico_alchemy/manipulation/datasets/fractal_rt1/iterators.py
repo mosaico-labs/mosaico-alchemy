@@ -11,7 +11,7 @@ import functools
 from pathlib import Path
 from typing import Callable, Iterable
 
-from mosaicopacks.manipulation.readers.tfds_reader import TFDSReader
+from mosaico_alchemy.manipulation.readers.tfds_reader import TFDSReader
 
 VIRTUAL_SEPARATOR = "@@"
 VIRTUAL_SUFFIX = ".episode"

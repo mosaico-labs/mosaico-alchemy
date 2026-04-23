@@ -13,7 +13,7 @@ from typing import Iterable
 import h5py
 import numpy as np
 
-from mosaicopacks.manipulation.utils.extract_video_frame import (
+from mosaico_alchemy.manipulation.utils.extract_video_frame import (
     extract_video_frames,
 )
 

@@ -1,6 +1,6 @@
 from mosaicolabs import ForceTorque, Message, Vector3d
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class ReassembleMeasuredForceTorqueAdapter(BaseAdapter):

@@ -1,8 +1,8 @@
 import numpy as np
 from mosaicolabs import Message
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.ontology.end_effector import EndEffector
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.ontology.end_effector import EndEffector
 
 
 class DroidEndEffectorAdapter(BaseAdapter):

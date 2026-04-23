@@ -1,5 +1,5 @@
 """
-CLI dispatcher for the packs bundled in `mosaicopacks`.
+CLI dispatcher for the packs bundled in `mosaico_alchemy`.
 
 The top-level executable does not implement ingestion itself. Its job is to route
 the first positional argument to the matching pack module so each pack can expose
@@ -10,20 +10,20 @@ import importlib
 import sys
 
 PACKS_MAP = {
-    "manipulation": "mosaicopacks.manipulation.main",
+    "manipulation": "mosaico_alchemy.manipulation.main",
 }
 
 
 def _print_help() -> None:
     available_packs = ", ".join(sorted(PACKS_MAP))
-    print("Usage: mosaicopacks <pack> [args...]")
+    print("Usage: mosaico_alchemy <pack> [args...]")
     print()
     print("Mosaico SDK Packs Runner.")
     print()
     print(f"Available packs: {available_packs}")
 
 
-def run_pack_cli() -> None:
+def run_alchemy_cli() -> None:
     """
     Dispatches the top-level CLI invocation to the selected pack entrypoint.
 
@@ -55,4 +55,4 @@ def run_pack_cli() -> None:
 
 
 if __name__ == "__main__":
-    run_pack_cli()
+    run_alchemy_cli()

@@ -19,21 +19,21 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.prompt import Prompt
 
-from mosaicopacks.configs import MOSAICO_HOST, MOSAICO_PORT
-from mosaicopacks.manipulation.contracts import DatasetPlugin, WriteMode
-from mosaicopacks.manipulation.datasets import (
+from mosaico_alchemy.configs import MOSAICO_HOST, MOSAICO_PORT
+from mosaico_alchemy.manipulation.contracts import DatasetPlugin, WriteMode
+from mosaico_alchemy.manipulation.datasets import (
     DatasetRegistry,
     build_default_dataset_registry,
 )
-from mosaicopacks.manipulation.runner.reporters.reports import (
+from mosaico_alchemy.manipulation.runner.reporters.reports import (
     DatasetIngestionReport,
     RunIngestionReport,
 )
-from mosaicopacks.manipulation.runner.reporters.upload_reporter import (
+from mosaico_alchemy.manipulation.runner.reporters.upload_reporter import (
     UploadReporter,
 )
-from mosaicopacks.manipulation.runner.runner import ManipulationRunner
-from mosaicopacks.manipulation.runner.stop_controller import StopController
+from mosaico_alchemy.manipulation.runner.runner import ManipulationRunner
+from mosaico_alchemy.manipulation.runner.stop_controller import StopController
 
 LOGGER = logging.getLogger(__name__)
 LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")

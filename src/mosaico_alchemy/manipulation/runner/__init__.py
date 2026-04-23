@@ -1,3 +1,3 @@
-from mosaicopacks.manipulation.runner.runner import ManipulationRunner
+from mosaico_alchemy.manipulation.runner.runner import ManipulationRunner
 
 __all__ = ["ManipulationRunner"]

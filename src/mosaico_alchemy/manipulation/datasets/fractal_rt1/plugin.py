@@ -19,8 +19,8 @@ from mosaicolabs import (
     Vector3d,
 )
 
-from mosaicopacks.manipulation.contracts import SequenceDescriptor, TopicDescriptor
-from mosaicopacks.manipulation.datasets.fractal_rt1.iterators import (
+from mosaico_alchemy.manipulation.contracts import SequenceDescriptor, TopicDescriptor
+from mosaico_alchemy.manipulation.datasets.fractal_rt1.iterators import (
     STEP_RATE_HZ,
     average_episode_size_bytes,
     count_steps,
@@ -33,7 +33,7 @@ from mosaicopacks.manipulation.datasets.fractal_rt1.iterators import (
     iter_step_vector,
     make_virtual_sequence_path,
 )
-from mosaicopacks.manipulation.ontology import (
+from mosaico_alchemy.manipulation.ontology import (
     TerminateEpisode,
     TextEmbedding,
     Vector3dBounds,
@@ -80,7 +80,7 @@ class FractalRT1Plugin:
         synthesizes stable path-like identifiers that can still flow through the
         generic runner and reporting layers.
         """
-        from mosaicopacks.manipulation.datasets.fractal_rt1.iterators import (
+        from mosaico_alchemy.manipulation.datasets.fractal_rt1.iterators import (
             available_episodes,
         )
 
@@ -92,7 +92,7 @@ class FractalRT1Plugin:
     def _find_missing_paths(
         self, sequence_path: Path, required_paths: tuple[str, ...]
     ) -> tuple[str, ...]:
-        from mosaicopacks.manipulation.datasets.fractal_rt1.iterators import (
+        from mosaico_alchemy.manipulation.datasets.fractal_rt1.iterators import (
             _dataset_feature_paths,
             parse_virtual_sequence_path,
         )
@@ -116,7 +116,7 @@ class FractalRT1Plugin:
         Returns:
             The sequence descriptor consumed by the file-style ingestion runner.
         """
-        from mosaicopacks.manipulation.datasets.fractal_rt1.iterators import (
+        from mosaico_alchemy.manipulation.datasets.fractal_rt1.iterators import (
             parse_virtual_sequence_path,
         )
 

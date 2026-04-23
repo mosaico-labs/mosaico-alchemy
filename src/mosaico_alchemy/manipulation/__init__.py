@@ -1,4 +1,4 @@
-from mosaicopacks.manipulation.runner.runner import ManipulationRunner
+from mosaico_alchemy.manipulation.runner.runner import ManipulationRunner
 
 from .adapters.base import BaseAdapter
 from .contracts import (

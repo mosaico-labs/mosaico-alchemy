@@ -6,91 +6,91 @@ dataset descriptors declarative: they only need to reference an `adapter_id`,
 while the registry owns the mapping to concrete translation classes.
 """
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.adapters.droid.robot.end_effector import (
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.droid.robot.end_effector import (
     DroidEndEffectorAdapter,
 )
-from mosaicopacks.manipulation.adapters.droid.robot.joint_state import (
+from mosaico_alchemy.manipulation.adapters.droid.robot.joint_state import (
     DroidJointStateAdapter,
 )
-from mosaicopacks.manipulation.adapters.droid.robot.pose import (
+from mosaico_alchemy.manipulation.adapters.droid.robot.pose import (
     DroidPoseAdapter,
 )
-from mosaicopacks.manipulation.adapters.droid.robot.velocity import (
+from mosaico_alchemy.manipulation.adapters.droid.robot.velocity import (
     DroidVelocityAdapter,
 )
-from mosaicopacks.manipulation.adapters.droid.scalar.boolean import (
+from mosaico_alchemy.manipulation.adapters.droid.scalar.boolean import (
     DroidBooleanAdapter,
 )
-from mosaicopacks.manipulation.adapters.droid.scalar.floating64 import (
+from mosaico_alchemy.manipulation.adapters.droid.scalar.floating64 import (
     DroidFloating64Adapter,
 )
-from mosaicopacks.manipulation.adapters.droid.scalar.integer64 import (
+from mosaico_alchemy.manipulation.adapters.droid.scalar.integer64 import (
     DroidInteger64Adapter,
 )
-from mosaicopacks.manipulation.adapters.droid.vision.video_frame import (
+from mosaico_alchemy.manipulation.adapters.droid.vision.video_frame import (
     DroidVideoFrameAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.action.terminate_episode import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.action.terminate_episode import (
     FractalRT1TerminateEpisodeAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.geometry.quaternion import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.geometry.quaternion import (
     FractalRT1QuaternionAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.geometry.spatial_bounds import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.geometry.spatial_bounds import (
     FractalRT1OrientationBoxAdapter,
     FractalRT1RobotOrientationPositionsBoxAdapter,
     FractalRT1WorkspaceBoundsAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.geometry.vector2d import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.geometry.vector2d import (
     FractalRT1Vector2dAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.geometry.vector3d import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.geometry.vector3d import (
     FractalRT1Vector3dAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.language.text_embedding import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.language.text_embedding import (
     FractalRT1TextEmbeddingAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.robot.pose import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.robot.pose import (
     FractalRT1PoseAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.scalar.boolean import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.scalar.boolean import (
     FractalRT1BooleanAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.scalar.floating32 import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.scalar.floating32 import (
     FractalRT1Floating32Adapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.scalar.string import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.scalar.string import (
     FractalRT1StringAdapter,
 )
-from mosaicopacks.manipulation.adapters.fractal_rt1.vision.video_frame import (
+from mosaico_alchemy.manipulation.adapters.fractal_rt1.vision.video_frame import (
     FractalRT1VideoFrameAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.audio.audio import (
+from mosaico_alchemy.manipulation.adapters.reassemble.audio.audio import (
     ReassembleAudioAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.robot.compensated_base_force_torque import (
+from mosaico_alchemy.manipulation.adapters.reassemble.robot.compensated_base_force_torque import (
     ReassembleCompensatedBaseForceTorqueAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.robot.end_effector import (
+from mosaico_alchemy.manipulation.adapters.reassemble.robot.end_effector import (
     ReassembleEndEffectorAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.robot.joint_state import (
+from mosaico_alchemy.manipulation.adapters.reassemble.robot.joint_state import (
     ReassembleJointStateAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.robot.measured_force_torque import (
+from mosaico_alchemy.manipulation.adapters.reassemble.robot.measured_force_torque import (
     ReassembleMeasuredForceTorqueAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.robot.pose import (
+from mosaico_alchemy.manipulation.adapters.reassemble.robot.pose import (
     ReassemblePoseAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.robot.velocity import (
+from mosaico_alchemy.manipulation.adapters.reassemble.robot.velocity import (
     ReassembleVelocityAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.vision.events import (
+from mosaico_alchemy.manipulation.adapters.reassemble.vision.events import (
     ReassembleEventsAdapter,
 )
-from mosaicopacks.manipulation.adapters.reassemble.vision.video_frame import (
+from mosaico_alchemy.manipulation.adapters.reassemble.vision.video_frame import (
     ReassembleVideoFrameAdapter,
 )
 

@@ -10,13 +10,13 @@ from pathlib import Path
 
 from rosbags.highlevel import AnyReader
 
-from mosaicopacks.manipulation.adapters.mml import (
+from mosaico_alchemy.manipulation.adapters.mml import (
     AudioDataAdapter,
     AudioInfoAdapter,
     JointTorqueCommandAdapter,
     TekscanSensorAdapter,
 )
-from mosaicopacks.manipulation.contracts import (
+from mosaico_alchemy.manipulation.contracts import (
     RosbagSequenceDescriptor,
     normalize_topic_name,
 )

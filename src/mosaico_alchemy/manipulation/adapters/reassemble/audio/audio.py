@@ -1,7 +1,7 @@
 from mosaicolabs import Message
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.ontology.audio import AudioData, AudioDataStamped
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.ontology.audio import AudioData, AudioDataStamped
 
 
 class ReassembleAudioAdapter(BaseAdapter):

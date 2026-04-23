@@ -1,13 +1,13 @@
-from mosaicopacks.manipulation.adapters.mml.audio.audio_data import (
+from mosaico_alchemy.manipulation.adapters.mml.audio.audio_data import (
     AudioDataAdapter,
 )
-from mosaicopacks.manipulation.adapters.mml.audio.audio_info import (
+from mosaico_alchemy.manipulation.adapters.mml.audio.audio_info import (
     AudioInfoAdapter,
 )
-from mosaicopacks.manipulation.adapters.mml.robot.joint_torque_command import (
+from mosaico_alchemy.manipulation.adapters.mml.robot.joint_torque_command import (
     JointTorqueCommandAdapter,
 )
-from mosaicopacks.manipulation.adapters.mml.robot.tekscan_sensor import (
+from mosaico_alchemy.manipulation.adapters.mml.robot.tekscan_sensor import (
     TekscanSensorAdapter,
 )
 

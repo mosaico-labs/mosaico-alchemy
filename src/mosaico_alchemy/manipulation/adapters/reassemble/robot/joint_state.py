@@ -1,6 +1,6 @@
 from mosaicolabs import Message, RobotJoint
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
 class ReassembleJointStateAdapter(BaseAdapter):

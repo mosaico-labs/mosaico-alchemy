@@ -1,7 +1,7 @@
 from mosaicolabs import Message
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.ontology.text_embedding import TextEmbedding
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.ontology.text_embedding import TextEmbedding
 
 
 class FractalRT1TextEmbeddingAdapter(BaseAdapter):

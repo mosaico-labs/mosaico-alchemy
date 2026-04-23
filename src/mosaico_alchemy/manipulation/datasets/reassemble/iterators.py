@@ -9,7 +9,7 @@ function that can later stream or count data for one concrete sequence file.
 from pathlib import Path
 from typing import Callable, Iterable
 
-from mosaicopacks.manipulation.readers import HDF5Reader
+from mosaico_alchemy.manipulation.readers import HDF5Reader
 
 
 def iter_records(

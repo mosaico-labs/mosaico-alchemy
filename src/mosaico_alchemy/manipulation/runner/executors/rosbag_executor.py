@@ -12,7 +12,7 @@ from collections.abc import Callable
 
 from mosaicolabs import SessionLevelErrorPolicy
 
-from mosaicopacks.manipulation.contracts import (
+from mosaico_alchemy.manipulation.contracts import (
     RosbagSequenceDescriptor,
     normalize_topic_name,
 )

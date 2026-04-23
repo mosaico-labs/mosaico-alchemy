@@ -12,7 +12,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from mosaicopacks.manipulation.runner.reporters.reports import (
+from mosaico_alchemy.manipulation.runner.reporters.reports import (
     DatasetIngestionReport,
     RunIngestionReport,
 )

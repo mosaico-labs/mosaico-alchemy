@@ -2,8 +2,8 @@ from typing import Any, Optional
 
 from mosaicolabs.ros_bridge import ROSAdapterBase
 
-from mosaicopacks.manipulation.ontology import AudioInfo
-from mosaicopacks.manipulation.ontology.audio import AudioFormat
+from mosaico_alchemy.manipulation.ontology import AudioInfo
+from mosaico_alchemy.manipulation.ontology.audio import AudioFormat
 
 
 class AudioInfoAdapter(ROSAdapterBase[AudioInfo]):

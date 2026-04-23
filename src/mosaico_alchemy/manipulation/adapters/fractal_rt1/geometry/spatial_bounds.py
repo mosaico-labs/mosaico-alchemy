@@ -1,7 +1,7 @@
 from mosaicolabs import Message, Vector3d
 
-from mosaicopacks.manipulation.adapters.base import BaseAdapter
-from mosaicopacks.manipulation.ontology import (
+from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
+from mosaico_alchemy.manipulation.ontology import (
     Vector3dBounds,
     Vector3dFrame,
     WorkspaceBounds,

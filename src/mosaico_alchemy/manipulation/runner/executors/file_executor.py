@@ -11,11 +11,11 @@ from pathlib import Path
 
 from mosaicolabs import SessionLevelErrorPolicy
 
-from mosaicopacks.manipulation.contracts import SequenceDescriptor, WriteMode
-from mosaicopacks.manipulation.runner.reporters.sequence_progress import (
+from mosaico_alchemy.manipulation.contracts import SequenceDescriptor, WriteMode
+from mosaico_alchemy.manipulation.runner.reporters.sequence_progress import (
     SequenceProgress,
 )
-from mosaicopacks.manipulation.runner.topic_ingester import TopicIngester
+from mosaico_alchemy.manipulation.runner.topic_ingester import TopicIngester
 
 LOGGER = logging.getLogger(__name__)
 

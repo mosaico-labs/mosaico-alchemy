@@ -87,6 +87,9 @@ from mosaico_alchemy.manipulation.adapters.reassemble.robot.pose import (
 from mosaico_alchemy.manipulation.adapters.reassemble.robot.velocity import (
     ReassembleVelocityAdapter,
 )
+from mosaico_alchemy.manipulation.adapters.reassemble.segment_info import (
+    ReassembleSegmentInfoAdapter,
+)
 from mosaico_alchemy.manipulation.adapters.reassemble.vision.events import (
     ReassembleEventsAdapter,
 )
@@ -184,6 +187,7 @@ def build_default_adapter_registry() -> AdapterRegistry:
     registry.register(ReassembleCompensatedBaseForceTorqueAdapter)
     registry.register(ReassembleAudioAdapter)
     registry.register(ReassembleEndEffectorAdapter)
+    registry.register(ReassembleSegmentInfoAdapter)
     registry.register(DroidJointStateAdapter)
     registry.register(DroidPoseAdapter)
     registry.register(DroidVelocityAdapter)

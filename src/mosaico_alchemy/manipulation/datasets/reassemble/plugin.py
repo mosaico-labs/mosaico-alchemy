@@ -14,16 +14,19 @@ from mosaico_alchemy.manipulation.contracts import SequenceDescriptor, TopicDesc
 from mosaico_alchemy.manipulation.datasets.reassemble.iterators import (
     count_audio,
     count_event_frames,
+    count_grasp_failure_labels,
     count_records,
     count_video_frames,
     iter_audio,
     iter_event_frames,
+    iter_grasp_failure_labels,
     iter_records,
     iter_video_frames,
 )
 from mosaico_alchemy.manipulation.ontology.audio import AudioDataStamped
 from mosaico_alchemy.manipulation.ontology.end_effector import EndEffector
 from mosaico_alchemy.manipulation.ontology.event_camera import EventCamera
+from mosaico_alchemy.manipulation.ontology.segment_info import SegmentInfo
 
 
 class ReassemblePlugin:
@@ -296,6 +299,27 @@ class ReassemblePlugin:
                         "robot_state/gripper_positions",
                         "robot_state/gripper_velocities",
                     ),
+                ),
+                TopicDescriptor(
+                    topic_name="grasp_failure_label",
+                    ontology_type=SegmentInfo,
+                    adapter_id=f"{self.dataset_id}.segment_info",
+                    payload_iter=iter_grasp_failure_labels(
+                        segments_info_path="segments_info",
+                    ),
+                    message_count=count_grasp_failure_labels(
+                        segments_info_path="segments_info",
+                    ),
+                    metadata={
+                        "source": "segments_info",
+                        "semantics": (
+                            "SegmentInfo with action='grasp', success=outcome flag from "
+                            "the source dataset, is_terminal distinguishing start (False) "
+                            "from end (True). Two messages per segment plus optional "
+                            "low_level segments with parent_action='grasp'."
+                        ),
+                    },
+                    required_paths=("segments_info",),
                 ),
             ],
         )

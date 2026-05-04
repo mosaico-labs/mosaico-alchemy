@@ -9,7 +9,105 @@ function that can later stream or count data for one concrete sequence file.
 from pathlib import Path
 from typing import Callable, Iterable
 
+import h5py
+
 from mosaico_alchemy.manipulation.readers import HDF5Reader
+
+
+def _iter_segment_boundaries(
+    h5_path: Path, segments_info_path: str, action: str = "grasp"
+) -> Iterable[dict]:
+    """Walk segments_info/{n}/{start,end,success} plus optional low_level/{k}/...
+    and yield two SegmentInfo records per segment (one start with is_terminal=False
+    and one end with is_terminal=True). Pairing the two boundaries lets a SyncHold
+    consumer carry the same payload across the whole segment interval.
+    """
+    with h5py.File(str(h5_path), "r") as f:
+        grp = f.get(segments_info_path)
+        if grp is None:
+            return
+        for key in sorted(grp.keys(), key=lambda k: int(k)):
+            s = grp[key]
+            if not all(k in s for k in ("start", "end", "success")):
+                continue
+            start_s = float(s["start"][()])
+            end_s = float(s["end"][()])
+            success = bool(s["success"][()])
+            yield {
+                "timestamp": start_s,
+                "action": action,
+                "parent_action": None,
+                "success": success,
+                "is_terminal": False,
+            }
+            yield {
+                "timestamp": end_s,
+                "action": action,
+                "parent_action": None,
+                "success": success,
+                "is_terminal": True,
+            }
+            ll = s.get("low_level")
+            if ll is None:
+                continue
+            for lk in sorted(ll.keys(), key=lambda k: int(k)):
+                ls = ll[lk]
+                if not all(k in ls for k in ("start", "end", "success")):
+                    continue
+                l_start_s = float(ls["start"][()])
+                l_end_s = float(ls["end"][()])
+                l_success = bool(ls["success"][()])
+                yield {
+                    "timestamp": l_start_s,
+                    "action": action,
+                    "parent_action": action,
+                    "success": l_success,
+                    "is_terminal": False,
+                }
+                yield {
+                    "timestamp": l_end_s,
+                    "action": action,
+                    "parent_action": action,
+                    "success": l_success,
+                    "is_terminal": True,
+                }
+
+
+def iter_grasp_failure_labels(
+    segments_info_path: str = "segments_info",
+    action: str = "grasp",
+) -> Callable[[Path], Iterable[dict]]:
+    """Builds a payload iterator factory for SegmentInfo records derived from the
+    Reassemble HDF5 `segments_info` group.
+
+    Args:
+        segments_info_path: HDF5 group containing per-segment annotations.
+        action: Action name carried in each emitted SegmentInfo record.
+
+    Returns:
+        A callable that accepts a sequence path and yields SegmentInfo payloads
+        (two per segment: one start with `is_terminal=False`, one end with
+        `is_terminal=True`).
+    """
+
+    def _fn(sequence_path: Path) -> Iterable[dict]:
+        yield from _iter_segment_boundaries(sequence_path, segments_info_path, action)
+
+    return _fn
+
+
+def count_grasp_failure_labels(
+    segments_info_path: str = "segments_info",
+) -> Callable[[Path], int]:
+    """Builds a counter factory matching the payloads produced by
+    `iter_grasp_failure_labels`. Returns the total number of records that will
+    be emitted (two per segment, including any nested low_level segments).
+    """
+
+    def _fn(sequence_path: Path) -> int:
+        return sum(1 for _ in _iter_segment_boundaries(sequence_path, segments_info_path))
+
+    return _fn
 
 
 def iter_records(

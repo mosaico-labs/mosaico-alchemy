@@ -2,6 +2,7 @@ from .audio import AudioData, AudioDataStamped, AudioInfo
 from .end_effector import EndEffector
 from .event_camera import Event, EventCamera
 from .joint_torque_command import JointTorqueCommand
+from .segment_info import SegmentInfo
 from .spatial_bounds import (
     Vector3dBounds,
     Vector3dFrame,
@@ -19,6 +20,7 @@ __all__ = [
     "Event",
     "EventCamera",
     "JointTorqueCommand",
+    "SegmentInfo",
     "TekscanSensor",
     "TerminateEpisode",
     "TextEmbedding",

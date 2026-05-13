@@ -154,7 +154,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/is_first",
                     ontology_type=Boolean,
-                    adapter_id="fractal_rt1.boolean",
+                    adapter_id=f"{self.dataset_id}.boolean",
                     payload_iter=iter_step_scalar("is_first"),
                     message_count=count_steps(),
                     required_paths=("steps.is_first",),
@@ -162,7 +162,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/is_last",
                     ontology_type=Boolean,
-                    adapter_id="fractal_rt1.boolean",
+                    adapter_id=f"{self.dataset_id}.boolean",
                     payload_iter=iter_step_scalar("is_last"),
                     message_count=count_steps(),
                     required_paths=("steps.is_last",),
@@ -170,7 +170,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/is_terminal",
                     ontology_type=Boolean,
-                    adapter_id="fractal_rt1.boolean",
+                    adapter_id=f"{self.dataset_id}.boolean",
                     payload_iter=iter_step_scalar("is_terminal"),
                     message_count=count_steps(),
                     required_paths=("steps.is_terminal",),
@@ -178,7 +178,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/reward",
                     ontology_type=Floating32,
-                    adapter_id="fractal_rt1.floating32",
+                    adapter_id=f"{self.dataset_id}.floating32",
                     payload_iter=iter_step_scalar("reward"),
                     message_count=count_steps(),
                     required_paths=("steps.reward",),
@@ -186,7 +186,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/action/base_displacement_vector",
                     ontology_type=Vector2d,
-                    adapter_id="fractal_rt1.vector2d",
+                    adapter_id=f"{self.dataset_id}.vector2d",
                     payload_iter=iter_step_vector("action.base_displacement_vector"),
                     message_count=count_steps(),
                     required_paths=("steps.action.base_displacement_vector",),
@@ -194,7 +194,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/action/base_displacement_vertical_rotation",
                     ontology_type=Floating32,
-                    adapter_id="fractal_rt1.floating32",
+                    adapter_id=f"{self.dataset_id}.floating32",
                     payload_iter=iter_step_scalar(
                         "action.base_displacement_vertical_rotation"
                     ),
@@ -206,7 +206,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/action/gripper_closedness_action",
                     ontology_type=Floating32,
-                    adapter_id="fractal_rt1.floating32",
+                    adapter_id=f"{self.dataset_id}.floating32",
                     payload_iter=iter_step_scalar("action.gripper_closedness_action"),
                     message_count=count_steps(),
                     required_paths=("steps.action.gripper_closedness_action",),
@@ -214,7 +214,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/action/rotation_delta",
                     ontology_type=Vector3d,
-                    adapter_id="fractal_rt1.vector3d",
+                    adapter_id=f"{self.dataset_id}.vector3d",
                     payload_iter=iter_step_vector("action.rotation_delta"),
                     message_count=count_steps(),
                     required_paths=("steps.action.rotation_delta",),
@@ -222,7 +222,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/action/terminate_episode",
                     ontology_type=TerminateEpisode,
-                    adapter_id="fractal_rt1.terminate_episode",
+                    adapter_id=f"{self.dataset_id}.terminate_episode",
                     payload_iter=iter_step_terminate_episode(
                         "action.terminate_episode"
                     ),
@@ -232,7 +232,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/action/world_vector",
                     ontology_type=Vector3d,
-                    adapter_id="fractal_rt1.vector3d",
+                    adapter_id=f"{self.dataset_id}.vector3d",
                     payload_iter=iter_step_vector("action.world_vector"),
                     message_count=count_steps(),
                     required_paths=("steps.action.world_vector",),
@@ -240,7 +240,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/base_pose_tool_reached",
                     ontology_type=Pose,
-                    adapter_id="fractal_rt1.pose",
+                    adapter_id=f"{self.dataset_id}.pose",
                     payload_iter=iter_step_pose("observation.base_pose_tool_reached"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.base_pose_tool_reached",),
@@ -248,7 +248,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/gripper_closed",
                     ontology_type=Floating32,
-                    adapter_id="fractal_rt1.floating32",
+                    adapter_id=f"{self.dataset_id}.floating32",
                     payload_iter=iter_step_scalar("observation.gripper_closed"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.gripper_closed",),
@@ -256,7 +256,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/gripper_closedness_commanded",
                     ontology_type=Floating32,
-                    adapter_id="fractal_rt1.floating32",
+                    adapter_id=f"{self.dataset_id}.floating32",
                     payload_iter=iter_step_scalar(
                         "observation.gripper_closedness_commanded"
                     ),
@@ -266,7 +266,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/height_to_bottom",
                     ontology_type=Floating32,
-                    adapter_id="fractal_rt1.floating32",
+                    adapter_id=f"{self.dataset_id}.floating32",
                     payload_iter=iter_step_scalar("observation.height_to_bottom"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.height_to_bottom",),
@@ -274,7 +274,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/image",
                     ontology_type=CompressedImage,
-                    adapter_id="fractal_rt1.video_frame",
+                    adapter_id=f"{self.dataset_id}.video_frame",
                     payload_iter=iter_step_image("observation.image"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.image",),
@@ -282,7 +282,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/natural_language_embedding",
                     ontology_type=TextEmbedding,
-                    adapter_id="fractal_rt1.text_embedding",
+                    adapter_id=f"{self.dataset_id}.text_embedding",
                     payload_iter=iter_step_value(
                         "observation.natural_language_embedding",
                         payload_key="values",
@@ -293,7 +293,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/natural_language_instruction",
                     ontology_type=String,
-                    adapter_id="fractal_rt1.string",
+                    adapter_id=f"{self.dataset_id}.string",
                     payload_iter=iter_step_value(
                         "observation.natural_language_instruction",
                         payload_key="value",
@@ -304,7 +304,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/orientation_box",
                     ontology_type=Vector3dBounds,
-                    adapter_id="fractal_rt1.orientation_box",
+                    adapter_id=f"{self.dataset_id}.orientation_box",
                     payload_iter=iter_step_values("observation.orientation_box"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.orientation_box",),
@@ -312,7 +312,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/orientation_start",
                     ontology_type=Quaternion,
-                    adapter_id="fractal_rt1.quaternion",
+                    adapter_id=f"{self.dataset_id}.quaternion",
                     payload_iter=iter_step_vector("observation.orientation_start"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.orientation_start",),
@@ -320,7 +320,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/robot_orientation_positions_box",
                     ontology_type=Vector3dFrame,
-                    adapter_id="fractal_rt1.robot_orientation_positions_box",
+                    adapter_id=f"{self.dataset_id}.robot_orientation_positions_box",
                     payload_iter=iter_step_values(
                         "observation.robot_orientation_positions_box"
                     ),
@@ -332,7 +332,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/rotation_delta_to_go",
                     ontology_type=Vector3d,
-                    adapter_id="fractal_rt1.vector3d",
+                    adapter_id=f"{self.dataset_id}.vector3d",
                     payload_iter=iter_step_vector("observation.rotation_delta_to_go"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.rotation_delta_to_go",),
@@ -340,7 +340,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/src_rotation",
                     ontology_type=Quaternion,
-                    adapter_id="fractal_rt1.quaternion",
+                    adapter_id=f"{self.dataset_id}.quaternion",
                     payload_iter=iter_step_vector("observation.src_rotation"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.src_rotation",),
@@ -348,7 +348,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/vector_to_go",
                     ontology_type=Vector3d,
-                    adapter_id="fractal_rt1.vector3d",
+                    adapter_id=f"{self.dataset_id}.vector3d",
                     payload_iter=iter_step_vector("observation.vector_to_go"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.vector_to_go",),
@@ -356,7 +356,7 @@ class FractalRT1Plugin:
                 TopicDescriptor(
                     topic_name="step/observation/workspace_bounds",
                     ontology_type=WorkspaceBounds,
-                    adapter_id="fractal_rt1.workspace_bounds",
+                    adapter_id=f"{self.dataset_id}.workspace_bounds",
                     payload_iter=iter_step_values("observation.workspace_bounds"),
                     message_count=count_steps(),
                     required_paths=("steps.observation.workspace_bounds",),

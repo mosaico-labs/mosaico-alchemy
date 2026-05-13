@@ -216,7 +216,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/observation/state/joint_position",
                     ontology_type=RobotJoint,
-                    adapter_id="droid.joint_state",
+                    adapter_id=f"{self.dataset_id}.joint_state",
                     payload_iter=iter_parquet_records(
                         fields={"position": "observation.state.joint_position"},
                         real_path=real_path,
@@ -228,7 +228,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/is_first",
                     ontology_type=Boolean,
-                    adapter_id="droid.boolean",
+                    adapter_id=f"{self.dataset_id}.boolean",
                     payload_iter=iter_parquet_records(
                         fields={"value": "is_first"},
                         real_path=real_path,
@@ -240,7 +240,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/is_last",
                     ontology_type=Boolean,
-                    adapter_id="droid.boolean",
+                    adapter_id=f"{self.dataset_id}.boolean",
                     payload_iter=iter_parquet_records(
                         fields={"value": "is_last"},
                         real_path=real_path,
@@ -252,7 +252,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/is_terminal",
                     ontology_type=Boolean,
-                    adapter_id="droid.boolean",
+                    adapter_id=f"{self.dataset_id}.boolean",
                     payload_iter=iter_parquet_records(
                         fields={"value": "is_terminal"},
                         real_path=real_path,
@@ -264,7 +264,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/reward",
                     ontology_type=Floating64,
-                    adapter_id="droid.floating64",
+                    adapter_id=f"{self.dataset_id}.floating64",
                     payload_iter=iter_parquet_records(
                         fields={"value": "reward"},
                         real_path=real_path,
@@ -276,7 +276,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/discount",
                     ontology_type=Floating64,
-                    adapter_id="droid.floating64",
+                    adapter_id=f"{self.dataset_id}.floating64",
                     payload_iter=iter_parquet_records(
                         fields={"value": "discount"},
                         real_path=real_path,
@@ -288,7 +288,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/task_index",
                     ontology_type=Integer64,
-                    adapter_id="droid.integer64",
+                    adapter_id=f"{self.dataset_id}.integer64",
                     payload_iter=iter_parquet_records(
                         fields={"value": "task_index"},
                         real_path=real_path,
@@ -300,7 +300,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/step/frame_index",
                     ontology_type=Integer64,
-                    adapter_id="droid.integer64",
+                    adapter_id=f"{self.dataset_id}.integer64",
                     payload_iter=iter_parquet_records(
                         fields={"value": "frame_index"},
                         real_path=real_path,
@@ -312,7 +312,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/observation/state/cartesian_position",
                     ontology_type=Pose,
-                    adapter_id="droid.pose",
+                    adapter_id=f"{self.dataset_id}.pose",
                     payload_iter=iter_parquet_records(
                         fields={"pose": "observation.state.cartesian_position"},
                         real_path=real_path,
@@ -324,7 +324,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/observation/state/gripper_position",
                     ontology_type=EndEffector,
-                    adapter_id="droid.end_effector",
+                    adapter_id=f"{self.dataset_id}.end_effector",
                     payload_iter=iter_parquet_records(
                         fields={"position": "observation.state.gripper_position"},
                         real_path=real_path,
@@ -336,7 +336,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/action/joint_position",
                     ontology_type=RobotJoint,
-                    adapter_id="droid.joint_state",
+                    adapter_id=f"{self.dataset_id}.joint_state",
                     payload_iter=iter_parquet_records(
                         fields={
                             "position": "action.joint_position",
@@ -351,7 +351,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/action/cartesian_position",
                     ontology_type=Pose,
-                    adapter_id="droid.pose",
+                    adapter_id=f"{self.dataset_id}.pose",
                     payload_iter=iter_parquet_records(
                         fields={"pose": "action.cartesian_position"},
                         real_path=real_path,
@@ -363,7 +363,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/action/cartesian_velocity",
                     ontology_type=Velocity,
-                    adapter_id="droid.velocity",
+                    adapter_id=f"{self.dataset_id}.velocity",
                     payload_iter=iter_parquet_records(
                         fields={"velocity": "action.cartesian_velocity"},
                         real_path=real_path,
@@ -375,7 +375,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/action/gripper",
                     ontology_type=EndEffector,
-                    adapter_id="droid.end_effector",
+                    adapter_id=f"{self.dataset_id}.end_effector",
                     payload_iter=iter_parquet_records(
                         fields={
                             "position": "action.gripper_position",
@@ -390,7 +390,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/camera_extrinsics/wrist_left",
                     ontology_type=Pose,
-                    adapter_id="droid.pose",
+                    adapter_id=f"{self.dataset_id}.pose",
                     payload_iter=iter_parquet_records(
                         fields={"pose": "camera_extrinsics.wrist_left"},
                         real_path=real_path,
@@ -402,7 +402,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/camera_extrinsics/exterior_1_left",
                     ontology_type=Pose,
-                    adapter_id="droid.pose",
+                    adapter_id=f"{self.dataset_id}.pose",
                     payload_iter=iter_parquet_records(
                         fields={"pose": "camera_extrinsics.exterior_1_left"},
                         real_path=real_path,
@@ -414,7 +414,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/camera_extrinsics/exterior_2_left",
                     ontology_type=Pose,
-                    adapter_id="droid.pose",
+                    adapter_id=f"{self.dataset_id}.pose",
                     payload_iter=iter_parquet_records(
                         fields={"pose": "camera_extrinsics.exterior_2_left"},
                         real_path=real_path,
@@ -426,7 +426,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/observation/images/wrist_left",
                     ontology_type=CompressedImage,
-                    adapter_id="droid.video_frame",
+                    adapter_id=f"{self.dataset_id}.video_frame",
                     payload_iter=iter_mp4_frames(
                         real_path, episode_index, "observation.images.wrist_left"
                     ),
@@ -435,7 +435,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/observation/images/exterior_1_left",
                     ontology_type=CompressedImage,
-                    adapter_id="droid.video_frame",
+                    adapter_id=f"{self.dataset_id}.video_frame",
                     payload_iter=iter_mp4_frames(
                         real_path, episode_index, "observation.images.exterior_1_left"
                     ),
@@ -444,7 +444,7 @@ class DROIDPlugin:
                 TopicDescriptor(
                     topic_name="/observation/images/exterior_2_left",
                     ontology_type=CompressedImage,
-                    adapter_id="droid.video_frame",
+                    adapter_id=f"{self.dataset_id}.video_frame",
                     payload_iter=iter_mp4_frames(
                         real_path, episode_index, "observation.images.exterior_2_left"
                     ),

@@ -36,25 +36,31 @@ With your ontologies defining the target structure, you implement a custom adapt
 from mosaicolabs import Message
 from mosaicolabs.packs.manipulation.adapters.base import BaseAdapter
 
-class MyDatasetCustomAdapter(BaseAdapter):
-    adapter_id = "mydataset.custom_sensor" # (1)!
-    ontology_type = CustomSensorModel # (2)!
+class MyDatasetCustomAdapter(BaseAdapter[CustomSensorModel]): # (1)!
+    adapter_id = "mydataset.custom_sensor" # (2)!
+    _REQUIRED_KEYS: tuple[str, ...] = ("timestamp","sensor_readings") # (3)!
 
     @classmethod
-    def translate(cls, payload: dict) -> Message: # (3)!
+    def translate(cls, payload: dict) -> Message: # (4)!
         """
         Translates a raw custom dictionary into a Mosaico Message container.
         """
+        cls._validate_payload(
+            payload=payload,
+            constraints={"sensor_readings": {"len": 4}} # (5)!
+        )
         return Message(
-            timestamp_ns=int(payload["timestamp"] * 1e9), # (4)!
+            timestamp_ns=int(payload["timestamp"] * 1e9), # (6)!
             data=CustomSensorModel(values=payload["sensor_readings"]),
         )
 ```
 
-1. The global identifier that will be referenced by name in your `TopicDescriptor`.
-2. The Mosaico ontology type (defined from the base `Serializable` structures) that this adapter handles.
-3. This is the heart of the translator. An adapter receives the raw payload dictionary from your custom iterator and returns an instantiated Mosaico message.
-4. Accurate conversion from arbitrary time structures into native Mosaico nanosecond formats.
+1. The Mosaico ontology type (defined from the base `Serializable` structures) that this adapter handles.
+2. The global identifier that will be referenced by name in your `TopicDescriptor`.
+3. Define the fields required in the payload, to be validated in the `translate` function via `cls._validate_payload`.
+4. This is the heart of the translator. An adapter receives the raw payload dictionary from your custom iterator and returns an instantiated Mosaico message.
+5. Set the constraints to expected list size to 4.
+6. Conversion from arbitrary time structures into native Mosaico nanosecond formats.
 
 ## Step 3: Developing the Dataset Plugin
 

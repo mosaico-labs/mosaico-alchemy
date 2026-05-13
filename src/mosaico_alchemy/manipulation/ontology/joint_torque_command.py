@@ -23,8 +23,6 @@ class JointTorqueCommand(Serializable):
         torques: Ordered torque commands aligned with `names`.
     """
 
-    __ontology_tag__ = "joint_torque_command"
-
     names: MosaicoType.list_(MosaicoType.string) = MosaicoField(
         description="Names of the different robot joints"
     )

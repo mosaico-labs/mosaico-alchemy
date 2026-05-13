@@ -21,8 +21,6 @@ class Vector3dBounds(Serializable):
         max: Upper bound vector.
     """
 
-    __ontology_tag__ = "vector3d_bounds"
-
     min: Vector3d = MosaicoField(description="Minimum vector limits.")
     max: Vector3d = MosaicoField(description="Maximum vector limits.")
 
@@ -39,8 +37,6 @@ class Vector3dFrame(Serializable):
         y_axis: Y-axis basis vector.
         z_axis: Z-axis basis vector.
     """
-
-    __ontology_tag__ = "vector3d_frame"
 
     x_axis: Vector3d = MosaicoField(description="X-axis vector component.")
     y_axis: Vector3d = MosaicoField(description="Y-axis vector component.")
@@ -59,8 +55,6 @@ class WorkspaceBounds(Serializable):
     Attributes:
         values: Dense 3x3 numeric layout describing workspace bounds.
     """
-
-    __ontology_tag__ = "workspace_bounds"
 
     values: MosaicoType.list_(
         MosaicoType.list_(MosaicoType.float64, list_size=3),

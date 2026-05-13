@@ -15,6 +15,9 @@ PACKS_MAP = {
 
 
 def _print_help() -> None:
+    """
+    Prints the help message for the CLI.
+    """
     available_packs = ", ".join(sorted(PACKS_MAP))
     print("Usage: mosaico_alchemy <pack> [args...]")
     print()

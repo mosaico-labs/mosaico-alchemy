@@ -20,8 +20,6 @@ class TextEmbedding(Serializable):
         values: Ordered embedding vector produced by the source encoder.
     """
 
-    __ontology_tag__ = "text_embedding"
-
     values: MosaicoType.list_(MosaicoType.float32) = MosaicoField(
         description="Values of the text embedding."
     )

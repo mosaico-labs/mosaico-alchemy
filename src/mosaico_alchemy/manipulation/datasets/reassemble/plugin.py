@@ -46,16 +46,41 @@ class ReassemblePlugin:
 
         Reassemble data is currently recognized purely by the presence of HDF5
         sequence files at the root level.
+
+        Args:
+            root: The root directory of the dataset.
+
+        Returns:
+            True if the root directory looks like a Reassemble dataset directory,
+            False otherwise.
         """
         return any(root.glob("*.h5"))
 
     def discover_sequences(self, root: Path) -> list[Path]:
-        """Returns the Reassemble sequence files that should be ingested."""
+        """
+        Returns the Reassemble sequence files that should be ingested.
+
+        Args:
+            root: The root directory of the dataset.
+
+        Returns:
+            A list of paths to the Reassemble sequence files.
+        """
         return sorted(root.glob("*.h5"))
 
     def _find_missing_paths(
         self, sequence_path: Path, required_paths: tuple[str, ...]
     ) -> tuple[str, ...]:
+        """
+        Finds missing paths in a Reassemble sequence file.
+
+        Args:
+            sequence_path: The path to the Reassemble sequence file.
+            required_paths: The paths to check for existence.
+
+        Returns:
+            A tuple of paths that are missing from the sequence file.
+        """
         from mosaico_alchemy.manipulation.readers import HDF5Reader
 
         with HDF5Reader(sequence_path) as reader:

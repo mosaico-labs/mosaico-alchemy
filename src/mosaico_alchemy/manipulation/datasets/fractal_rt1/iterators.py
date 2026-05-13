@@ -20,20 +20,44 @@ STEP_PERIOD_NS = 1_000_000_000 / STEP_RATE_HZ
 
 
 def num_examples(root: Path) -> int:
-    """Returns the total number of examples exposed by the TFDS train split."""
+    """
+    Returns the total number of examples exposed by the TFDS train split.
+
+    Args:
+        root: Path to the directory containing the TFDS dataset.
+
+    Returns:
+        The total number of examples in the train split.
+    """
     with TFDSReader(root) as reader:
         return reader.num_examples
 
 
 def available_episodes(root: Path) -> list[int]:
-    """Returns the episode indices that are actually available on disk."""
+    """
+    Returns the episode indices that are actually available on disk.
+
+    Args:
+        root: Path to the directory containing the TFDS dataset.
+
+    Returns:
+        List of available episode indices.
+    """
     with TFDSReader(root) as reader:
         return reader.available_episodes
 
 
 @functools.lru_cache(maxsize=8)
 def _dataset_feature_paths(root_str: str) -> frozenset[str]:
-    """Caches the flattened TFDS feature paths available under one dataset root."""
+    """
+    Caches the flattened TFDS feature paths available under one dataset root.
+
+    Args:
+        root_str: String representation of the dataset root path.
+
+    Returns:
+        Frozenset of available feature paths.
+    """
     with TFDSReader(root_str) as reader:
         return reader.dataset_feature_paths
 
@@ -46,6 +70,12 @@ def average_episode_size_bytes(root_str: str) -> int:
     The dataset is stored in shared TFRecord shards, so the estimate is derived by
     dividing the total shard size by the number of available episodes. The result is
     approximate, but good enough for reporting and progress metadata.
+
+    Args:
+        root_str: String representation of the dataset root path.
+
+    Returns:
+        Estimated average size of one episode in bytes.
     """
     root = Path(root_str)
     total_size_bytes = sum(p.stat().st_size for p in root.glob("*.tfrecord-*"))
@@ -59,6 +89,13 @@ def make_virtual_sequence_path(root: Path, episode_index: int) -> Path:
     The returned path is not expected to exist on disk. It is a stable identifier
     that keeps the runner, reporters, and descriptor APIs file-oriented even though
     Fractal RT-1 episodes live inside shared TFDS shards.
+
+    Args:
+        root: Path to the directory containing the TFDS dataset.
+        episode_index: Index of the episode to create a virtual path for.
+
+    Returns:
+        Synthetic path identifying the TFDS episode as a sequence.
     """
     return root / f"train{VIRTUAL_SEPARATOR}{episode_index:06d}{VIRTUAL_SUFFIX}"
 
@@ -86,14 +123,30 @@ def parse_virtual_sequence_path(sequence_path: Path) -> tuple[Path, int]:
 
 @functools.lru_cache(maxsize=16)
 def _load_episode(sequence_path_str: str) -> dict:
-    """Caches one decoded TFDS episode keyed by its virtual sequence path."""
+    """
+    Caches one decoded TFDS episode keyed by its virtual sequence path.
+
+    Args:
+        sequence_path_str: String representation of the virtual sequence path.
+
+    Returns:
+        Decoded TFDS episode dictionary.
+    """
     root, episode_index = parse_virtual_sequence_path(Path(sequence_path_str))
     with TFDSReader(root) as reader:
         return reader.load_episode(episode_index)
 
 
 def _steps(sequence_path: Path) -> list[dict]:
-    """Normalizes an episode into a step-by-step list of payload dictionaries."""
+    """
+    Normalizes an episode into a step-by-step list of payload dictionaries.
+
+    Args:
+        sequence_path: Virtual sequence path identifying the episode.
+
+    Returns:
+        List of step-level payload dictionaries.
+    """
     episode = _load_episode(str(sequence_path))
     steps = episode.get("steps", [])
     if isinstance(steps, dict):
@@ -105,11 +158,25 @@ def _steps(sequence_path: Path) -> list[dict]:
 
 
 def count_steps() -> Callable[[Path], int]:
-    """Builds a counter factory returning the number of steps in one episode."""
+    """
+    Builds a counter factory returning the number of steps in one episode.
+
+    Returns:
+        Callable that accepts a virtual sequence path and returns the number of steps.
+    """
     return lambda seq_path: len(_steps(seq_path))
 
 
 def _timestamp_ns(step_index: int) -> int:
+    """
+    Calculates the synthetic timestamp in nanoseconds for a given step index.
+
+    Args:
+        step_index: The index of the step.
+
+    Returns:
+        Synthetic timestamp in nanoseconds.
+    """
     return int(round(step_index * STEP_PERIOD_NS))
 
 
@@ -177,31 +244,71 @@ def iter_step_value(
 
 
 def iter_step_image(field_path: str) -> Callable[[Path], Iterable[dict]]:
-    """Builds an image payload iterator factory for one step-level feature."""
+    """
+    Builds an image payload iterator factory for one step-level feature.
+
+    Args:
+        field_path: Dotted path to the step-level TFDS image feature.
+
+    Returns:
+        A callable that accepts a virtual sequence path and yields image payloads.
+    """
     return iter_step_value(field_path, payload_key="image")
 
 
 def iter_step_pose(field_path: str) -> Callable[[Path], Iterable[dict]]:
-    """Builds a pose payload iterator factory for one step-level feature."""
+    """
+    Builds a pose payload iterator factory for one step-level feature.
+
+    Args:
+        field_path: Dotted path to the step-level TFDS pose feature.
+
+    Returns:
+        A callable that accepts a virtual sequence path and yields pose payloads.
+    """
     return iter_step_value(field_path, payload_key="pose", transform=TFDSReader.as_list)
 
 
 def iter_step_vector(field_path: str) -> Callable[[Path], Iterable[dict]]:
-    """Builds a vector payload iterator factory for one step-level feature."""
+    """
+    Builds a vector payload iterator factory for one step-level feature.
+
+    Args:
+        field_path: Dotted path to the step-level TFDS vector feature.
+
+    Returns:
+        A callable that accepts a virtual sequence path and yields vector payloads.
+    """
     return iter_step_value(
         field_path, payload_key="vector", transform=TFDSReader.as_list
     )
 
 
 def iter_step_values(field_path: str) -> Callable[[Path], Iterable[dict]]:
-    """Builds a multi-value payload iterator factory for one step-level feature."""
+    """
+    Builds a multi-value payload iterator factory for one step-level feature.
+
+    Args:
+        field_path: Dotted path to the step-level TFDS feature.
+
+    Returns:
+        A callable that accepts a virtual sequence path and yields multi-value payloads.
+    """
     return iter_step_value(
         field_path, payload_key="values", transform=TFDSReader.as_list
     )
 
 
 def iter_step_scalar(field_path: str) -> Callable[[Path], Iterable[dict]]:
-    """Builds a scalar payload iterator factory for one step-level feature."""
+    """
+    Builds a scalar payload iterator factory for one step-level feature.
+
+    Args:
+        field_path: Dotted path to the step-level TFDS scalar feature.
+
+    Returns:
+        A callable that accepts a virtual sequence path and yields scalar payloads.
+    """
     return iter_step_value(
         field_path, payload_key="value", transform=TFDSReader.as_scalar
     )
@@ -213,6 +320,12 @@ def iter_step_terminate_episode(field_path: str) -> Callable[[Path], Iterable[di
 
     The TFDS field is normalized to a list of integers because the downstream
     ontology expects the termination signal as an explicit numeric vector.
+
+    Args:
+        field_path: Dotted path to the step-level TFDS terminate-episode feature.
+
+    Returns:
+        A callable that accepts a virtual sequence path and yields terminate-episode payloads.
     """
 
     def _fn(sequence_path: Path) -> Iterable[dict]:

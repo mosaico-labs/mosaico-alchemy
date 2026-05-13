@@ -46,8 +46,6 @@ class AudioInfo(Serializable):
         coding_format: Declared coding format for the payload.
     """
 
-    __ontology_tag__ = "audio_info"
-
     channels: MosaicoType.uint8 = MosaicoField(
         nullable=True,
         description="Number of audio channels in the stream.",
@@ -81,8 +79,6 @@ class AudioData(Serializable):
         data: Binary payload containing encoded audio bytes.
     """
 
-    __ontology_tag__ = "audio_data"
-
     data: MosaicoType.binary = MosaicoField(
         description="Binary payload containing the audio data."
     )
@@ -99,8 +95,6 @@ class AudioDataStamped(Serializable):
         audio_data: Audio payload for the current message or chunk.
         audio_info: Optional stream metadata associated with the payload.
     """
-
-    __ontology_tag__ = "audio_data_stamped"
 
     audio_data: AudioData = MosaicoField(
         description="Audio payload for the current message."

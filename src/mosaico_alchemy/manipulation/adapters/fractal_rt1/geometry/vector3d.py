@@ -3,15 +3,21 @@ from mosaicolabs import Message, Vector3d
 from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
-class FractalRT1Vector3dAdapter(BaseAdapter):
+class FractalRT1Vector3dAdapter(BaseAdapter[Vector3d]):
+    """
+    Adapter for vector3d data in FractalRT1 datasets.
+
+    Translates vector3d data from the dataset's message format to the
+    `mosaicolabs.Vector3d` ontology type.
+    """
+
     adapter_id = "fractal_rt1.vector3d"
-    ontology_type = Vector3d
+    _REQUIRED_KEYS: tuple[str, ...] = ("timestamp_ns", "vector")
 
     @classmethod
     def translate(cls, payload: dict) -> Message:
-        vector = payload.get("vector")
-
+        cls._validate_payload(payload=payload, constraints={"vector": {"len": 3}})
         return Message(
-            timestamp_ns=int(payload.get("timestamp_ns", 0.0)),
-            data=Vector3d(x=vector[0], y=vector[1], z=vector[2]),
+            timestamp_ns=int(payload["timestamp_ns"]),
+            data=Vector3d.from_list(payload["vector"]),
         )

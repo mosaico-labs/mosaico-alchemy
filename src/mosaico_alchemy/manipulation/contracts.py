@@ -60,12 +60,19 @@ class TopicDescriptor:
     """
 
     topic_name: str
+    """Public topic name that will be created in Mosaico."""
     ontology_type: type[Serializable]
+    """Serializable ontology model expected after adapter translation."""
     adapter_id: str
+    """Registry identifier of the adapter that understands the payloads."""
     payload_iter: Callable[[Path], Iterable[dict]]
+    """Factory returning the raw payload stream for a sequence path."""
     message_count: Callable[[Path], int]
+    """Callable used for progress reporting before ingestion starts."""
     metadata: dict[str, Any] = field(default_factory=dict)
+    """Optional schema metadata to attach when creating the topic."""
     required_paths: tuple[str, ...] = field(default_factory=tuple)
+    """Dataset-relative paths that must exist for the topic to be ingestible."""
 
 
 @dataclass
@@ -87,10 +94,15 @@ class SequenceDescriptor:
     """
 
     sequence_name: str
+    """Stable name that will be created remotely for the sequence."""
     sequence_metadata: dict[str, Any] = field(default_factory=dict)
+    """Optional metadata attached to the created sequence."""
     topics: list[TopicDescriptor] = field(default_factory=list)
+    """Topic declarations that make up the sequence ingestion plan."""
     find_missing_paths: Callable[[Path, tuple[str, ...]], tuple[str, ...]] | None = None
+    """Optional validator used to explain which dataset paths are missing."""
     backend: str = field(init=False, default="file")
+    """Internal discriminator consumed by the runner to select the file executor."""
 
 
 @dataclass
@@ -113,17 +125,24 @@ class RosbagSequenceDescriptor:
     """
 
     bag_path: Path
+    """Path to the bag file or directory that should be replayed."""
     sequence_name: str
+    """Stable name that will be created remotely for the sequence."""
     sequence_metadata: dict[str, Any] = field(default_factory=dict)
+    """Optional metadata attached to the created sequence."""
     default_topics: tuple[str, ...] = field(default_factory=tuple)
+    """Topics to ingest when no explicit override is provided elsewhere."""
     adapter_overrides: dict[str, type["ROSAdapterBase"]] = field(default_factory=dict)
+    """Per-topic adapter overrides for ROS message translation."""
     backend: str = field(init=False, default="rosbag")
+    """Internal discriminator consumed by the runner to select the rosbag executor."""
 
 
-# Public descriptor union returned by dataset plugins for runner execution.
 IngestionDescriptor: TypeAlias = SequenceDescriptor | RosbagSequenceDescriptor
-# Supported write modes for file-backed topic ingestion.
+"""Public descriptor union returned by dataset plugins for runner execution."""
+
 WriteMode: TypeAlias = Literal["sync", "async"]
+"""Supported write modes for file-backed topic ingestion."""
 
 
 class DatasetPlugin(Protocol):
@@ -140,6 +159,7 @@ class DatasetPlugin(Protocol):
     """
 
     dataset_id: str
+    """Stable identifier used in CLI output, reporting, and plugin lookup."""
 
     def supports(self, root: Path) -> bool:
         """

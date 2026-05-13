@@ -8,7 +8,7 @@ plugins can stay declarative.
 """
 
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
 
 import h5py
 import numpy as np
@@ -28,17 +28,34 @@ class HDF5Reader:
     """
 
     def __init__(self, file_path: Path):
-        """Initializes the reader for one HDF5 sequence file."""
-        self.file_path = file_path
-        self._handle = None
+        """
+        Initializes the reader for one HDF5 sequence file.
 
-    def __enter__(self):
-        """Opens the HDF5 file and returns the active reader instance."""
-        self._handle = h5py.File(self.file_path, "r")
+        Args:
+            file_path: Path to the HDF5 file.
+        """
+        self._file_path: Path = file_path
+        self._handle: Optional[h5py.File] = None
+
+    def __enter__(self) -> "HDF5Reader":
+        """
+        Opens the HDF5 file and returns the active reader instance.
+
+        Returns:
+            The active HDF5Reader instance.
+        """
+        self._handle = h5py.File(self._file_path, "r")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Closes the underlying HDF5 handle when leaving the context manager."""
+        """
+        Closes the underlying HDF5 handle when leaving the context manager.
+
+        Args:
+            exc_type: Exception type that caused the exit.
+            exc_val: Exception value.
+            exc_tb: Traceback.
+        """
         if self._handle is not None:
             self._handle.close()
             self._handle = None

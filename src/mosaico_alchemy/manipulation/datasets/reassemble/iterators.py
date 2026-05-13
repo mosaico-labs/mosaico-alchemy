@@ -105,7 +105,9 @@ def count_grasp_failure_labels(
     """
 
     def _fn(sequence_path: Path) -> int:
-        return sum(1 for _ in _iter_segment_boundaries(sequence_path, segments_info_path))
+        return sum(
+            1 for _ in _iter_segment_boundaries(sequence_path, segments_info_path)
+        )
 
     return _fn
 

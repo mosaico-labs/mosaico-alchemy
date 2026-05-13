@@ -23,6 +23,12 @@ def _get_tfds(root_dir: str):
 
     TensorFlow and TFDS imports are intentionally delayed so projects that do not
     use TFDS-backed datasets do not pay their import cost at module load time.
+
+    Args:
+        root_dir: Path to the root directory of the dataset.
+
+    Returns:
+        Tuple of (tfds, builder) for the dataset.
     """
     os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
     try:
@@ -42,7 +48,15 @@ def _get_tfds(root_dir: str):
 
 
 def _resolve_builder_dir(root: Path) -> Path:
-    """Resolves the directory that actually contains the TFDS metadata files."""
+    """
+    Resolves the directory that actually contains the TFDS metadata files.
+
+    Args:
+        root: Path to the root directory of the dataset.
+
+    Returns:
+        Path to the directory containing the TFDS metadata files.
+    """
     if (root / "dataset_info.json").exists():
         return root
     for child in sorted(root.iterdir()):
@@ -62,23 +76,45 @@ class TFDSReader:
     """
 
     def __init__(self, root_dir: str | Path):
-        """Initializes the reader for one TFDS dataset root or builder directory."""
+        """
+        Initializes the reader for one TFDS dataset root or builder directory.
+
+        Args:
+            root_dir: Path to the root directory of the dataset.
+        """
         self.root_dir = _resolve_builder_dir(Path(root_dir))
         self._tfds = None
         self._builder = None
 
     def __enter__(self):
-        """Initializes the cached TFDS builder and returns the active reader."""
+        """
+        Initializes the cached TFDS builder and returns the active reader.
+
+        Returns:
+            The active TFDSReader instance.
+        """
         self._tfds, self._builder = _get_tfds(str(self.root_dir))
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Leaves the cached TFDS builder resident; no explicit cleanup is required."""
+        """
+        Leaves the cached TFDS builder resident; no explicit cleanup is required.
+
+        Args:
+            exc_type: Exception type that caused the exit.
+            exc_val: Exception value.
+            exc_tb: Traceback.
+        """
         pass  # Cached builder stays resident
 
     @functools.cached_property
     def dataset_info(self) -> dict:
-        """Returns the parsed `dataset_info.json` metadata for the current root."""
+        """
+        Returns the parsed `dataset_info.json` metadata for the current root.
+
+        Returns:
+            Dictionary containing the dataset information.
+        """
         info_path = self.root_dir / "dataset_info.json"
         return (
             json.loads(info_path.read_text(encoding="utf-8"))
@@ -88,7 +124,12 @@ class TFDSReader:
 
     @functools.cached_property
     def features_info(self) -> dict:
-        """Returns the parsed `features.json` metadata for the current root."""
+        """
+        Returns the parsed `features.json` metadata for the current root.
+
+        Returns:
+            Dictionary containing the features information.
+        """
         info_path = self.root_dir / "features.json"
         return (
             json.loads(info_path.read_text(encoding="utf-8"))
@@ -103,6 +144,9 @@ class TFDSReader:
 
         The result is used by dataset plugins to validate required feature paths
         without loading an actual episode first.
+
+        Returns:
+            Frozen set of dotted feature paths.
         """
 
         def _walk(node: dict, prefix: str = "") -> set[str]:
@@ -132,6 +176,9 @@ class TFDSReader:
         """
         Returns the total number of examples in the TFDS train split.
 
+        Returns:
+            Total number of examples in the train split.
+
         Raises:
             ValueError: If the dataset metadata does not describe a train split.
         """
@@ -150,6 +197,9 @@ class TFDSReader:
         This is more conservative than `num_examples`: when only a subset of shards
         is available on disk, the method returns only the indices that can actually
         be loaded.
+
+        Returns:
+            List of episode indices.
         """
         import re
 
@@ -192,7 +242,7 @@ class TFDSReader:
         Raises:
             RuntimeError: If the reader is used outside its context manager.
         """
-        if not self._builder:
+        if not self._builder or not self._tfds:
             raise RuntimeError("TFDSReader is not open. Use with context manager.")
         split = f"train[{episode_index}:{episode_index + 1}]"
         dataset = self._builder.as_dataset(split=split)
@@ -200,7 +250,15 @@ class TFDSReader:
 
     @staticmethod
     def sequence_length(tree: Any) -> int:
-        """Returns the first-axis length of a nested TFDS sequence structure."""
+        """
+        Returns the first-axis length of a nested TFDS sequence structure.
+
+        Args:
+            tree: Nested structure of TFDS sequence data.
+
+        Returns:
+            First-axis length of the sequence structure.
+        """
         if isinstance(tree, dict):
             return TFDSReader.sequence_length(next(iter(tree.values()))) if tree else 0
         if isinstance(tree, np.ndarray):
@@ -209,14 +267,32 @@ class TFDSReader:
 
     @staticmethod
     def index_tree(tree: Any, index: int) -> Any:
-        """Indexes one element out of a nested TFDS sequence structure."""
+        """
+        Indexes one element out of a nested TFDS sequence structure.
+
+        Args:
+            tree: Nested structure of TFDS sequence data.
+            index: Index to extract from the sequence structure.
+
+        Returns:
+            Element at the specified index in the sequence structure.
+        """
         if isinstance(tree, dict):
             return {k: TFDSReader.index_tree(v, index) for k, v in tree.items()}
         return tree[index] if isinstance(tree, (np.ndarray, list, tuple)) else tree
 
     @staticmethod
     def get_nested(data: Any, field_path: str) -> Any:
-        """Resolves a dotted feature path inside a nested TFDS payload tree."""
+        """
+        Resolves a dotted feature path inside a nested TFDS payload tree.
+
+        Args:
+            data: Nested structure of TFDS sequence data.
+            field_path: Dotted feature path to resolve.
+
+        Returns:
+            Value at the specified feature path.
+        """
         current = data
         for part in field_path.split("."):
             current = current[part]
@@ -224,14 +300,30 @@ class TFDSReader:
 
     @staticmethod
     def as_list(value: Any) -> list:
-        """Normalizes a scalar, array, or sequence into a flat Python list."""
+        """
+        Normalizes a scalar, array, or sequence into a flat Python list.
+
+        Args:
+            value: Value to normalize.
+
+        Returns:
+            Flat Python list.
+        """
         if isinstance(value, np.ndarray):
             return value.reshape(-1).tolist()
         return list(value) if isinstance(value, (list, tuple)) else [value]
 
     @staticmethod
     def as_scalar(value: Any) -> Any:
-        """Normalizes a scalar-like TFDS value to a single Python scalar."""
+        """
+        Normalizes a scalar-like TFDS value to a single Python scalar.
+
+        Args:
+            value: Value to normalize.
+
+        Returns:
+            Single Python scalar.
+        """
         if isinstance(value, np.ndarray):
             return value.reshape(-1)[0].item() if value.size > 0 else 0
         if isinstance(value, (list, tuple)):

@@ -29,8 +29,6 @@ class SegmentInfo(Serializable):
             message of the segment, True on the end message.
     """
 
-    __ontology_tag__ = "segment_info"
-
     action: MosaicoType.string = MosaicoField(
         description="The requested/performed action in natural language."
     )

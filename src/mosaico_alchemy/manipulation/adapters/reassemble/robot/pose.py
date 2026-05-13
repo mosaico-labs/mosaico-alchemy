@@ -3,25 +3,41 @@ from mosaicolabs import Message, Point3d, Pose, Quaternion
 from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
-class ReassemblePoseAdapter(BaseAdapter):
+class ReassemblePoseAdapter(BaseAdapter[Pose]):
+    """
+    Adapter for `pose` data in Reassemble datasets.
+
+    Translates `pose` data from the dataset's message format to the
+    `mosaicolabs.Pose` ontology type.
+    """
+
     adapter_id = "reassemble.pose"
-    ontology_type = Pose
+    _REQUIRED_KEYS: tuple[str, ...] = ("timestamp", "pose")
 
     @classmethod
     def translate(cls, payload: dict) -> Message:
+        """
+        Translates a raw `pose` payload into a `mosaicolabs.Pose` message.
+
+        Args:
+            payload: Raw payload from the `pose` topic.
+
+        Returns:
+            A `Message` containing the `mosaicolabs.Pose` data.
+        """
+        cls._validate_payload(
+            payload=payload,
+            constraints={
+                "pose": {"len": 7},
+            },
+        )
+
+        pose = payload["pose"]
+
         return Message(
-            timestamp_ns=int(payload.get("timestamp", 0.0) * 1e9),
+            timestamp_ns=int(payload["timestamp"] * 1e9),
             data=Pose(
-                position=Point3d(
-                    x=payload.get("pose")[0],
-                    y=payload.get("pose")[1],
-                    z=payload.get("pose")[2],
-                ),
-                orientation=Quaternion(
-                    x=payload.get("pose")[3],
-                    y=payload.get("pose")[4],
-                    z=payload.get("pose")[5],
-                    w=payload.get("pose")[6],
-                ),
+                position=Point3d.from_list(pose[:3]),
+                orientation=Quaternion.from_list(pose[3:]),
             ),
         )

@@ -29,7 +29,17 @@ class DatasetRegistry:
 
     def __init__(self) -> None:
         """Initializes an empty dataset plugin registry."""
+
         self._plugins: list[DatasetPlugin] = []
+        """
+        List of dataset plugin instances.
+
+        The order of plugins in this list defines the precedence for dataset resolution.
+        When resolving a dataset root, the registry iterates through the plugins in order
+        and returns the first one whose `supports` method returns `True`. The same
+        applies for interactive selection, where the first plugin in the list will be
+        presented first to the user.
+        """
 
     def register(self, plugin: DatasetPlugin) -> None:
         """
@@ -69,10 +79,12 @@ class DatasetRegistry:
         Raises:
             KeyError: If no registered plugin exposes `dataset_id`.
         """
-        for plugin in self._plugins:
-            if plugin.dataset_id == dataset_id:
-                return plugin
-        raise KeyError(f"Unknown dataset plugin '{dataset_id}'")
+        try:
+            return next(
+                plugin for plugin in self._plugins if plugin.dataset_id == dataset_id
+            )
+        except StopIteration:
+            raise KeyError(f"Unknown dataset plugin '{dataset_id}'")
 
     def resolve(self, root: Path) -> DatasetPlugin:
         """
@@ -87,10 +99,10 @@ class DatasetRegistry:
         Raises:
             ValueError: If no plugin recognizes the dataset layout.
         """
-        for plugin in self._plugins:
-            if plugin.supports(root):
-                return plugin
-        raise ValueError(f"No dataset plugin found for {root}")
+        try:
+            return next(plugin for plugin in self._plugins if plugin.supports(root))
+        except StopIteration:
+            raise ValueError(f"No dataset plugin found for {root}")
 
 
 def build_default_dataset_registry() -> DatasetRegistry:

@@ -11,8 +11,6 @@ from pathlib import Path
 from rosbags.highlevel import AnyReader
 
 from mosaico_alchemy.manipulation.adapters.mml import (
-    AudioDataAdapter,
-    AudioInfoAdapter,
     JointTorqueCommandAdapter,
     TekscanSensorAdapter,
 )
@@ -40,6 +38,11 @@ class MMLPlugin:
         "/tekscan/frame",
     )
 
+    """
+    These are the canonical topics we expect to find in a full MML recording. This is the minimal
+    set of topics that must be present in a bag file for it to be considered an MML sequence.
+    """
+
     DEFAULT_TOPICS = (
         "/allegro_hand_right/joint_states",
         "/audio/audio",
@@ -50,6 +53,10 @@ class MMLPlugin:
         "/tekscan/frame",
         "/trialInfo",
     )
+    """
+    The full default topics list above should always be present in a complete MML recording.
+    However, downstream systems may opt to process only a subset of the available sensor streams.
+    """
 
     def supports(self, root: Path) -> bool:
         """
@@ -58,6 +65,12 @@ class MMLPlugin:
         The plugin probes discovered bag files and requires a small set of signature
         topics before claiming support. This keeps the registry from treating generic
         rosbag folders as MML datasets by accident.
+
+        Args:
+            root: Path to the directory containing the MML sequences.
+
+        Returns:
+            True if the root contains at least one MML sequence, False otherwise.
         """
         bag_paths = self.discover_sequences(root)
         if not bag_paths:
@@ -79,7 +92,15 @@ class MMLPlugin:
         return False
 
     def discover_sequences(self, root: Path) -> list[Path]:
-        """Returns the candidate `.bag` files that should be considered as MML sequences."""
+        """
+        Returns the candidate `.bag` files that should be considered as MML sequences.
+
+        Args:
+            root: Path to the directory containing the MML sequences.
+
+        Returns:
+            List of paths to the MML sequence bag files.
+        """
         return sorted(
             sequence_path
             for sequence_path in root.glob("*.bag")
@@ -111,8 +132,6 @@ class MMLPlugin:
             },
             default_topics=self.DEFAULT_TOPICS,
             adapter_overrides={
-                "/audio/audio": AudioDataAdapter,
-                "/audio/audio_info": AudioInfoAdapter,
                 "/iiwa/TorqueController/command": JointTorqueCommandAdapter,
                 "/tekscan/frame": TekscanSensorAdapter,
             },

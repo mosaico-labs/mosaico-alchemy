@@ -27,8 +27,6 @@ class Event(Serializable):
         dt_ns: Time offset from the start of the enclosing event window.
     """
 
-    __ontology_tag__ = "event"
-
     x: MosaicoType.uint16 = MosaicoField(
         description="Horizontal pixel coordinate of the event."
     )
@@ -58,8 +56,6 @@ class EventCamera(Serializable):
         t_start_ns: Inclusive start timestamp of the event window.
         t_end_ns: Exclusive end timestamp of the event window.
     """
-
-    __ontology_tag__ = "event_camera"
 
     width: MosaicoType.uint32 = MosaicoField(description="Sensor width in pixels.")
     height: MosaicoType.uint32 = MosaicoField(description="Sensor height in pixels.")

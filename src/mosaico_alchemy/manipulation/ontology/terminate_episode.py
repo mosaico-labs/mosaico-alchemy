@@ -21,8 +21,6 @@ class TerminateEpisode(Serializable):
         terminate_episode: Raw 3-element termination vector from the source dataset.
     """
 
-    __ontology_tag__ = "terminate_episode"
-
     terminate_episode: MosaicoType.list_(MosaicoType.int32, list_size=3) = MosaicoField(
         description=(
             "RT-1 terminate signal encoded as a 3-element int32 vector in the order "

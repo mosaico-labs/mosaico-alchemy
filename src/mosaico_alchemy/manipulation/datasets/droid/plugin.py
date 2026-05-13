@@ -107,6 +107,7 @@ class DROIDPlugin:
         """
         metadata = dict(base_metadata)
         try:
+            import pyarrow.compute as pc
             import pyarrow.dataset as ds
 
             d = ds.dataset(real_path, format="parquet")
@@ -127,7 +128,7 @@ class DROIDPlugin:
             if valid_cols:
                 scanner = d.scanner(
                     columns=valid_cols,
-                    filter=(ds.field("episode_index") == episode_index),
+                    filter=(pc.field("episode_index") == episode_index),
                 )
                 df = scanner.head(1).to_pandas()
                 if len(df) > 0:
@@ -149,7 +150,16 @@ class DROIDPlugin:
     def _find_missing_paths(
         self, sequence_path: Path, required_paths: tuple[str, ...]
     ) -> tuple[str, ...]:
-        """Checks required schema paths against the real parquet behind a virtual sequence."""
+        """
+        Checks required schema paths against the real parquet behind a virtual sequence.
+
+        Args:
+            sequence_path: The path to the DROID sequence file.
+            required_paths: The paths to check for existence.
+
+        Returns:
+            A tuple of paths that are missing from the sequence file.
+        """
         real_path = sequence_path
         if "@@" in sequence_path.name:
             real_stem = sequence_path.stem.split("@@")[0]

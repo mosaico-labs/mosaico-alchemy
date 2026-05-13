@@ -25,8 +25,6 @@ class TekscanSensor(Serializable):
         cols: Optional number of columns in the sensor layout.
     """
 
-    __ontology_tag__ = "tekscan_sensor"
-
     values: MosaicoType.list_(MosaicoType.float64) = MosaicoField(
         description="Values of the sensor array."
     )

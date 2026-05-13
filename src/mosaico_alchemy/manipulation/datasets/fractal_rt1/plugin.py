@@ -59,6 +59,12 @@ class FractalRT1Plugin:
 
         The check deliberately uses cheap filesystem signals only: metadata files and
         at least one expected TFRecord shard for the train split.
+
+        Args:
+            root: Path to the root directory of the dataset.
+
+        Returns:
+            True if the root looks like a Fractal RT-1 TFDS export, False otherwise.
         """
         if not root.is_dir():
             return False
@@ -79,6 +85,12 @@ class FractalRT1Plugin:
         Fractal RT-1 does not expose episodes as standalone files, so discovery
         synthesizes stable path-like identifiers that can still flow through the
         generic runner and reporting layers.
+
+        Args:
+            root: Path to the root directory of the dataset.
+
+        Returns:
+            List of virtual sequence paths, one for each episode in the dataset.
         """
         from mosaico_alchemy.manipulation.datasets.fractal_rt1.iterators import (
             available_episodes,

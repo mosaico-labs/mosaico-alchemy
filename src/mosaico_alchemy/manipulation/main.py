@@ -51,7 +51,13 @@ class DatasetSelection:
     """
 
     plugin_id: str | None
+    """
+    The ID of the plugin selected for the dataset.
+    """
     warning: str | None = None
+    """
+    The warning message for the dataset.
+    """
 
 
 def configure_logging(

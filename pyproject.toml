@@ -17,7 +17,7 @@ keywords = [
 packages = [{ include = "mosaico_alchemy", from = "src" }]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4"
+python = ">=3.11,<4"
 mosaicolabs = ">=0.4.0"
 numpy = ">=2.0.0,<2.5.0"
 pillow = ">=11.3.0,<13.0.0"

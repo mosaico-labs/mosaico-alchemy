@@ -3,24 +3,40 @@ from mosaicolabs import Message, Vector3d, Velocity
 from mosaico_alchemy.manipulation.adapters.base import BaseAdapter
 
 
-class ReassembleVelocityAdapter(BaseAdapter):
+class ReassembleVelocityAdapter(BaseAdapter[Velocity]):
+    """
+    Adapter for `velocity` data in Reassemble datasets.
+
+    Translates `velocity` data from the dataset's message format to the
+    `mosaicolabs.Velocity` ontology type.
+    """
+
     adapter_id = "reassemble.velocity"
-    ontology_type = Velocity
+    _REQUIRED_KEYS: tuple[str, ...] = ("timestamp", "velocity")
 
     @classmethod
     def translate(cls, payload: dict) -> Message:
+        """
+        Translates a raw `velocity` payload into a `mosaicolabs.Velocity` message.
+
+        Args:
+            payload: Raw payload from the `velocity` topic.
+
+        Returns:
+            A `Message` containing the `mosaicolabs.Velocity` data.
+        """
+        cls._validate_payload(
+            payload=payload,
+            constraints={
+                "velocity": {"len": 6},
+            },
+        )
+        velocity = payload["velocity"]
+
         return Message(
-            timestamp_ns=int(payload.get("timestamp", 0.0) * 1e9),
+            timestamp_ns=int(payload["timestamp"] * 1e9),
             data=Velocity(
-                linear=Vector3d(
-                    x=payload.get("velocity")[0],
-                    y=payload.get("velocity")[1],
-                    z=payload.get("velocity")[2],
-                ),
-                angular=Vector3d(
-                    x=payload.get("velocity")[3],
-                    y=payload.get("velocity")[4],
-                    z=payload.get("velocity")[5],
-                ),
+                linear=Vector3d.from_list(velocity[:3]),
+                angular=Vector3d.from_list(velocity[3:]),
             ),
         )

@@ -14,7 +14,15 @@ from typing import Callable, Iterable
 
 @functools.lru_cache(maxsize=16)
 def _get_parquet_df(real_path: str):
-    """Caches the full pandas dataframe loaded from one DROID parquet file."""
+    """
+    Caches the full pandas dataframe loaded from one DROID parquet file.
+
+    Args:
+        real_path: The real path to the parquet file.
+
+    Returns:
+        The pandas dataframe containing the episode data.
+    """
     import pyarrow.dataset as ds
 
     return ds.dataset(real_path, format="parquet").scanner().to_table().to_pandas()

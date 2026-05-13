@@ -23,8 +23,6 @@ class EndEffector(Serializable):
         velocities: Velocity values for each controlled end-effector dimension.
     """
 
-    __ontology_tag__ = "end_effector"
-
     efforts: MosaicoType.list_(MosaicoType.float64) = MosaicoField(
         description="End-effector effort values for each controlled dimension."
     )

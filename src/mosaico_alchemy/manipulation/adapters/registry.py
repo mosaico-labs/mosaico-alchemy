@@ -150,6 +150,9 @@ class AdapterRegistry:
 
         Returning a copy keeps registry ownership explicit and avoids accidental
         mutation by callers that only need to inspect available adapters.
+
+        Returns:
+            Copy of the adapter mapping.
         """
         return dict(self._adapters)
 

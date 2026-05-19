@@ -109,7 +109,7 @@ class ReassemblePlugin:
                 "source_file": sequence_path.name,
             },
             find_missing_paths=self._find_missing_paths,
-            topics=[
+            topic_descriptors=[
                 TopicDescriptor(
                     topic_name="capture_node-camera-image",
                     ontology_type=CompressedImage,

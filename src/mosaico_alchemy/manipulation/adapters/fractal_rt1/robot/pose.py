@@ -26,10 +26,11 @@ class FractalRT1PoseAdapter(BaseAdapter[Pose]):
             A `Message` containing the `mosaicolabs.Pose` data.
         """
         cls._validate_payload(payload=payload, constraints={"pose": {"len": 7}})
+        pose = payload["pose"]
         return Message(
             timestamp_ns=int(payload["timestamp_ns"]),
             data=Pose(
-                position=Point3d.from_list(payload["pose"][:3]),
-                orientation=Quaternion.from_list(payload["pose"][3:]),
+                position=Point3d.from_list(pose[:3]),
+                orientation=Quaternion.from_list(pose[3:]),
             ),
         )

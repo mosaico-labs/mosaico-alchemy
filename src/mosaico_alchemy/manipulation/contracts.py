@@ -97,7 +97,7 @@ class SequenceDescriptor:
     """Stable name that will be created remotely for the sequence."""
     sequence_metadata: dict[str, Any] = field(default_factory=dict)
     """Optional metadata attached to the created sequence."""
-    topics: list[TopicDescriptor] = field(default_factory=list)
+    topic_descriptors: list[TopicDescriptor] = field(default_factory=list)
     """Topic declarations that make up the sequence ingestion plan."""
     find_missing_paths: Callable[[Path, tuple[str, ...]], tuple[str, ...]] | None = None
     """Optional validator used to explain which dataset paths are missing."""

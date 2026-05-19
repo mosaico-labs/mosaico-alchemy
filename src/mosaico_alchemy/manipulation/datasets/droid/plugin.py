@@ -212,7 +212,7 @@ class DROIDPlugin:
             sequence_name=seq_name,
             sequence_metadata=metadata,
             find_missing_paths=self._find_missing_paths,
-            topics=[
+            topic_descriptors=[
                 TopicDescriptor(
                     topic_name="/observation/state/joint_position",
                     ontology_type=RobotJoint,

@@ -64,7 +64,7 @@ class FileSequenceExecutor:
             "Creating file sequence '%s' from %s with %d topic(s) using %s topic ingestion",
             plan.sequence_name,
             sequence_path.name,
-            len(plan.topics),
+            len(plan.topic_descriptors),
             (
                 "sync (default)"
                 if self._write_mode == "sync"
@@ -74,12 +74,12 @@ class FileSequenceExecutor:
 
         missing_topic_sources = self._find_missing_topic_sources(sequence_path, plan)
         topic_totals = {
-            topic.topic_name: (
+            tdescr.topic_name: (
                 0
-                if topic.topic_name in missing_topic_sources
-                else topic.message_count(sequence_path)
+                if tdescr.topic_name in missing_topic_sources
+                else tdescr.message_count(sequence_path)
             )
-            for topic in plan.topics
+            for tdescr in plan.topic_descriptors
         }
         ui = SequenceProgress(self.console)
         ui.setup(topic_totals)
@@ -90,10 +90,12 @@ class FileSequenceExecutor:
             on_error=SessionLevelErrorPolicy.Delete,
         ) as swriter:
             with ui.live():
-                topic_writers = self._ingester.prepare_topic_writers(swriter, plan, ui)
+                topic_bindings = self._ingester.prepare_topic_bindings(
+                    swriter, plan, ui
+                )
                 total_messages = self._ingester.run_ingestion(
                     sequence_path,
-                    topic_writers,
+                    topic_bindings,
                     ui,
                     missing_topic_sources=missing_topic_sources,
                 )
@@ -101,7 +103,7 @@ class FileSequenceExecutor:
         LOGGER.info(
             "Completed file sequence '%s' — %d topic(s), %d message(s)",
             plan.sequence_name,
-            len(plan.topics),
+            len(plan.topic_descriptors),
             total_messages,
         )
 
@@ -125,7 +127,7 @@ class FileSequenceExecutor:
         if not plan.find_missing_paths:
             return missing_topic_sources
 
-        for topic in plan.topics:
+        for topic in plan.topic_descriptors:
             if not topic.required_paths:
                 continue
 

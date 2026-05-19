@@ -150,7 +150,7 @@ class FractalRT1Plugin:
                 "step_rate_hz": STEP_RATE_HZ,
             },
             find_missing_paths=self._find_missing_paths,
-            topics=[
+            topic_descriptors=[
                 TopicDescriptor(
                     topic_name="step/is_first",
                     ontology_type=Boolean,

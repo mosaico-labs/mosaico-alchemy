@@ -31,15 +31,7 @@ class DroidVelocityAdapter(BaseAdapter[Velocity]):
         return Message(
             timestamp_ns=int(payload["timestamp"] * 1e9),
             data=Velocity(
-                linear=Vector3d(
-                    x=velocity[0],
-                    y=velocity[1],
-                    z=velocity[2],
-                ),
-                angular=Vector3d(
-                    x=velocity[3],
-                    y=velocity[4],
-                    z=velocity[5],
-                ),
+                linear=Vector3d.from_list(velocity[:3]),
+                angular=Vector3d.from_list(velocity[3:]),
             ),
         )

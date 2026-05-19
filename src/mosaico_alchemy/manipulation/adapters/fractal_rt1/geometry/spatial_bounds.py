@@ -36,8 +36,8 @@ class FractalRT1OrientationBoxAdapter(BaseAdapter[Vector3dBounds]):
         return Message(
             timestamp_ns=int(payload["timestamp_ns"]),
             data=Vector3dBounds(
-                min=Vector3d(x=values[0], y=values[1], z=values[2]),
-                max=Vector3d(x=values[3], y=values[4], z=values[5]),
+                min=Vector3d.from_list(values[:3]),
+                max=Vector3d.from_list(values[3:]),
             ),
         )
 
@@ -70,9 +70,9 @@ class FractalRT1RobotOrientationPositionsBoxAdapter(BaseAdapter[Vector3dFrame]):
         return Message(
             timestamp_ns=int(payload["timestamp_ns"]),
             data=Vector3dFrame(
-                x_axis=Vector3d(x=values[0], y=values[1], z=values[2]),
-                y_axis=Vector3d(x=values[3], y=values[4], z=values[5]),
-                z_axis=Vector3d(x=values[6], y=values[7], z=values[8]),
+                x_axis=Vector3d.from_list(values[:3]),
+                y_axis=Vector3d.from_list(values[3:6]),
+                z_axis=Vector3d.from_list(values[6:]),
             ),
         )
 

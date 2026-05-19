@@ -31,10 +31,5 @@ class FractalRT1QuaternionAdapter(BaseAdapter[Quaternion]):
 
         return Message(
             timestamp_ns=int(payload["timestamp_ns"]),
-            data=Quaternion(
-                w=vector[0],
-                x=vector[1],
-                y=vector[2],
-                z=vector[3],
-            ),
+            data=Quaternion.from_list(vector),
         )
